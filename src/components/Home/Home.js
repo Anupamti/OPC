@@ -1,35 +1,35 @@
 import React, { useState } from 'react'
 import Box from '../Box/Box'
+import List from '../List/List'
 import './Home.css'
 function Home() {
 
-    const [formData, setFormData] = useState()
+    const [formData, setFormData] = useState([])
+
 
     const handleFormSubmit = (e) => {
-        setFormData(e)
-        console.log(e)
+        setFormData((prevState) => {
+            return [e, ...prevState]
+        })
     }
 
     return (
         <div className={"main"}>
-            <h3>Sate Up lifting </h3>
-            {
-                formData && (
-                    <>
-                        getting the data from the child to parent component
-                        <div style={{ display: "flex", justifyContent: 'space-evenly', width: '80%' }}>
-
-                            <p>{formData?.name}</p>
-                            <p>{formData?.age}</p>
-                            <p>{formData?.email}</p>
-                            <p>{formData?.hobbies}</p>
-                        </div>
-                    </>
-                )
-            }
+            <h3>DATA STORAGE APP</h3>
+            <p>listing the data using map , key and stroring the objects in a state</p>
             <div className={"sub"}>
                 <Box onFormSubmit={handleFormSubmit} />
             </div>
+            <br />
+
+            <h3> List of added items </h3>
+
+            {
+                formData?.map((data) => (
+                    <List key={data.id} props={data} />
+                ))
+            }
+
 
         </div>
     )

@@ -7,15 +7,16 @@ function Box(props) {
     const [age, setAge] = useState('')
     const [hobbies, setHobbies] = useState('')
 
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
+        let id = Math.random().toString()
         props.onFormSubmit({
             name,
             email,
             age,
             hobbies,
-
+            id
         })
         setName('');
         setAge('');
