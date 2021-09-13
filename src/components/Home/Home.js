@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '../Box/Box'
 import List from '../List/List'
 import './Home.css'
 function Home() {
 
     const [formData, setFormData] = useState([])
-
+    const [listContent, setListContent] = useState()
 
     const handleFormSubmit = (e) => {
         setFormData((prevState) => {
@@ -13,23 +13,30 @@ function Home() {
         })
     }
 
+    useEffect(() => {
+        if (formData.length === 0) {
+            setListContent(<h3>NO Content Found</h3>)
+        }
+        else {
+            setListContent(
+                formData?.map((data) => (
+                    <List key={data.id} props={data} />
+                ))
+            )
+        }
+    }, [formData.length])
+
     return (
         <div className={"main"}>
             <h3>DATA STORAGE APP</h3>
-            <p>listing the data using map , key and stroring the objects in a state</p>
+            <p> Conditional Content</p>
             <div className={"sub"}>
                 <Box onFormSubmit={handleFormSubmit} />
             </div>
             <br />
 
             <h3> List of added items </h3>
-
-            {
-                formData?.map((data) => (
-                    <List key={data.id} props={data} />
-                ))
-            }
-
+            {listContent}
 
         </div>
     )
